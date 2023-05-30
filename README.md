@@ -1,5 +1,5 @@
 # Genrytor
-Generative AI examples, apps and frameworks  
+Generative AI examples, apps and frameworks.  
 
 # Installation steps
 1. Git clone this repo  
