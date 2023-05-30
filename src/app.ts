@@ -50,12 +50,12 @@ const prompt = new PromptTemplate({ template, inputVariables: ["city"] });
 //Define run function
 export async function run() {
   //Initialize model
-  const model = new OpenAI({ modelName: "text-davinci-003"});
+  const model = new OpenAI({});
   //Initialize chain
   const chain = APIChain.fromLLMAndAPIDocs(model, OPEN_METEO_DOCS);
   //Call chain
   const res = await chain.call({
-    question: contextualKnowledge + await prompt.format({city:"Mount Everest"})
+    question: contextualKnowledge + await prompt.format({city:"Berlin"})
   });
   //Print output
   console.log(`Got output ${res.output}`);
