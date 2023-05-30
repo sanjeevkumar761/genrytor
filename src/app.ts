@@ -1,11 +1,13 @@
+//import packages
 import { OpenAI } from "langchain/llms/openai";
 import { APIChain } from "langchain/chains";
 import { PromptTemplate } from "langchain/prompts";
-
-
 import * as dotenv from "dotenv";
+
+//Load enviornment variables
 dotenv.config();
 
+//Describe API docs
 const OPEN_METEO_DOCS = `BASE URL: https://api.open-meteo.com/
 
 API Documentation
@@ -36,18 +38,27 @@ snow_depth	Instant	meters	Snow depth on the ground
 freezinglevel_height	Instant	meters	Altitude above sea level of the 0°C level
 visibility	Instant	meters	Viewing distance in meters. Influenced by low clouds, humidity and aerosols. Maximum visibility is approximately 24 km.`;
 
+//Provide contextual knowledge
 const contextualKnowledge = "Walk is possible only when temperature is above 15 degrees Celsius."
+
+//Define prompt template string
 const template = "Is current weather in {city} good for a walk?";
+
+//Create prompt
 const prompt = new PromptTemplate({ template, inputVariables: ["city"] });
 
+//Define run function
 export async function run() {
+  //Initialize model
   const model = new OpenAI({ modelName: "text-davinci-003"});
+  //Initialize chain
   const chain = APIChain.fromLLMAndAPIDocs(model, OPEN_METEO_DOCS);
-
+  //Call chain
   const res = await chain.call({
     question: contextualKnowledge + await prompt.format({city:"Mount Everest"})
   });
+  //Print output
   console.log(`Got output ${res.output}`);
 }
-
+//Run function
 run();
