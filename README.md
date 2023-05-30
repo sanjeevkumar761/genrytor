@@ -1,2 +1,2 @@
-# genrytor
-Generative AI apps and frameworks
+# Genrytor
+Generative AI examples, apps and frameworks  
